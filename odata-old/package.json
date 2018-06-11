@@ -1,0 +1,22 @@
+{
+  "name": "odata",
+  "version": "0.0.1",
+  "description": "A re-usable Generic data manager and odata interface",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "ng-packagr -p package.json"
+  },
+  "author": "Gus Crawford",
+  "license": "MIT",
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
+  "ngPackage": {
+    "lib": {
+      "entryFile": "index.ts"
+    }
+  },
+  "devDependencies": {
+    "@angular/cli": "^6.0.8",
+    "ng-packagr": "^3.0.1"
+  }
+}
