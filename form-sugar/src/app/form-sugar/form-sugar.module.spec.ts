@@ -1,10 +1,10 @@
-import { FormBlockModule } from './form-block.module';
+import { FormSugarModule } from './form-sugar.module';
 
 describe('FormBlockModule', () => {
-  let formBlockModule: FormBlockModule;
+  let formBlockModule: FormSugarModule;
 
   beforeEach(() => {
-    formBlockModule = new FormBlockModule();
+    formBlockModule = new FormSugarModule();
   });
 
   it('should create an instance', () => {

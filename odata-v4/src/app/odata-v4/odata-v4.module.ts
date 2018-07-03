@@ -8,4 +8,5 @@ import { ODataV4Service } from './odata-v4.service'
   declarations: [],
   providers:[ODataV4Service]
 })
-export class ODataV4Module { }
+export class ODataV4Module { };
+export { ODataV4Service };

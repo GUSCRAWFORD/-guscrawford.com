@@ -14,7 +14,7 @@ export class ODataV4Service {
   api() {
     return this.http.get(ODataV4Service.apiRoot)
       .pipe(map(i=>{
-        return i.json().value
+        return typeof i.json === 'function'?i.json().value:i;
       }));
   }
   static apiRoot = "";
@@ -39,7 +39,7 @@ registerItemAction(method:string, action:string) {
     return this.http[method.toLowerCase()](url, data, {
         withCredentials:true
       })
-      .map(rs=>rs.json());
+      .map(rs=>typeof rs.json==='function'?rs.json():rs);
   }
 }
 $count(query:ODataQuery): Observable<number> {
@@ -51,7 +51,7 @@ $count(query:ODataQuery): Observable<number> {
     .get(url, {
       withCredentials:true
     })
-    .pipe(map(rs=>rs.json()))
+    .pipe(map(rs=>typeof rs.json==='function'?rs.json():rs))
     .pipe(take(1));
 }
 create(data:TModel) {
@@ -62,7 +62,7 @@ create(data:TModel) {
     .post(url, filterStoredData(data), {
       withCredentials:true
     })
-    .pipe(map(rs=>rs.json()));
+    .pipe(map(rs=>typeof rs.json==='function'?rs.json():rs));
 }
 update(data:TModel, key:((d:TModel)=>any)|any='_id') {
   let keyId = data[typeof key === 'function'?key(data):key],
@@ -74,7 +74,7 @@ update(data:TModel, key:((d:TModel)=>any)|any='_id') {
     .put(url, filterStoredData(data), {
       withCredentials:true
     })
-    .pipe(map(rs=>rs.json()));
+    .pipe(map(rs=>typeof rs.json==='function'?rs.json():rs));
 }
 single(key:any, query?:ODataQuery): Observable<TModel> {
   let url = "@api/@resource('@key')"
@@ -86,7 +86,7 @@ single(key:any, query?:ODataQuery): Observable<TModel> {
     .get(url, {
       withCredentials:true
     })
-    .pipe(map(rs=>rs.json())).pipe(take(1))
+    .pipe(map(rs=>typeof rs.json==='function'?rs.json():rs)).pipe(take(1))
     .pipe(map(rs=>{
       rs.$ = this.model$odata;
       //rs.forEach(r=>r.$ = this.model$odata);
@@ -102,7 +102,7 @@ query(query?:ODataQuery): Observable<TModel[]> {
     .get(url, {
       withCredentials:true
     })
-    .pipe(map(rs=>rs.json().value))
+    .pipe(map(rs=>typeof rs.json==='function'?rs.json().value:rs))
     .pipe(map(rs=>{
       rs.forEach(r=>r.$=this.model$odata);
       return rs;
@@ -118,7 +118,7 @@ remove(key:any) {
     .delete(url, {
       withCredentials:true
     })
-    .pipe(map(rs=>rs.json()))
+    .pipe(map(rs=>typeof rs.json==='function'?rs.json():rs))
     .pipe(take(1));
 }
 }
